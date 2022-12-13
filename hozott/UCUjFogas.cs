@@ -38,10 +38,8 @@ namespace hozott
 
                 if (exit == DialogResult.Yes)
                 {
-                    Controls.Clear();
-                    UserControl uCUjRecept = new UCUjRecept();
-                    Controls.Add(uCUjRecept);
-                    uCUjRecept.Dock = DockStyle.Fill;
+                    Form formUjRecept = new FormUjRecept();
+                    formUjRecept.ShowDialog();
                 }
 
             }
@@ -63,6 +61,7 @@ namespace hozott
                 e.Cancel = true;
                 errorProvider1.SetError(textBoxFogasNev, "Ez a mező nem lehet üres!");
             }
+
         }
 
         private void textBoxFogasNev_Validated(object sender, EventArgs e)

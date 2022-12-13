@@ -34,7 +34,7 @@ namespace hozott
 
         private void buttonDiagram_Click(object sender, EventArgs e)
         {
-            Form formDiagram = new FormDiagram();
+            Form formDiagram = new FormUjRecept();
             formDiagram.ShowDialog();
         }
 

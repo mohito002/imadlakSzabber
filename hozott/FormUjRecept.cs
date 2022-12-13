@@ -11,10 +11,10 @@ using System.Windows.Forms;
 
 namespace hozott
 {
-    public partial class UCUjRecept : UserControl
+    public partial class FormUjRecept : Form
     {
         ReceptContext receptContext = new ReceptContext();
-        public UCUjRecept()
+        public FormUjRecept()
         {
             InitializeComponent();
 
@@ -22,7 +22,7 @@ namespace hozott
                                  orderby x.FogasId
                                  select x.FogasNev).LastOrDefault();
             NyersanyagListazas();
-            
+
         }
 
         private void textBoxNyersanyag_TextChanged(object sender, EventArgs e)
@@ -32,7 +32,8 @@ namespace hozott
 
 
         //HOZZÁVALÓ TÖRLÉSE MEGERŐSÍTÉSSEL
-        private void buttonTorles_Click_1(object sender, EventArgs e)
+
+        private void buttonTorles_Click(object sender, EventArgs e)
         {
             DialogResult exit = MessageBox.Show("Tényleg ki szeretné törölni?", "Törlés", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -49,21 +50,19 @@ namespace hozott
                 HozzavaloListazas();
             }
 
-
         }
 
-
-
         //Új hozzávaló felvétele
-        private void listBoxNyersanyag_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void listBoxNyersanyag_SelectedIndexChanged(object sender, EventArgs e)
         {
             var kiválasztottNyersanyag = (Nyersanyagok)listBoxNyersanyag.SelectedItem;
             var megyseg = (from x in receptContext.MennyisegiEgysegek
                            where x.MennyisegiEgysegId == kiválasztottNyersanyag.MennyisegiEgysegId
                            select x).FirstOrDefault();
             labelMennyEgys.Text = megyseg.EgysegNev;
+
         }
-        private void buttonHozzaadas_Click_1(object sender, EventArgs e)
+        private void buttonHozzaadas_Click(object sender, EventArgs e)
         {
             Receptek r = new Receptek();
             r.NyersanyagId = ((Nyersanyagok)listBoxNyersanyag.SelectedItem).NyersanyagId;
@@ -77,6 +76,7 @@ namespace hozott
             receptContext.SaveChanges();
             HozzavaloListazas();
         }
+
 
         //NYERSANYAG SZŰRÉS
         private void NyersanyagListazas()
@@ -109,5 +109,7 @@ namespace hozott
                              };
             hozzavaloBindingSource.DataSource = hozzávalók.ToList();
         }
+
+
     }
 }

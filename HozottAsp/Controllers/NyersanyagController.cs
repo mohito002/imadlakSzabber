@@ -33,12 +33,38 @@ namespace HozottAsp.Controllers
         [HttpPost]
         public void Post([FromBody] Nyersanyagok ujNya)
         {
-            ReceptContext context = new ReceptContext();
-            context.Nyersanyagok.Add(ujNya);
-            context.SaveChanges();
+            try
+            {
+                ReceptContext context = new ReceptContext();
+                context.Nyersanyagok.Add(ujNya);
+                context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                string errMsg = string.Format("Error: {0}\nLine: {1}", ex.Message, ex.Source);
+            }
+
         }
 
+        // DELETE api/nyersanyagcontroller
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            try
+            {
+                ReceptContext context = new ReceptContext();
+                var törlendoNya = (from x in context.Nyersanyagok
+                                   where x.NyersanyagId == id
+                                   select x).FirstOrDefault();
+                context.Remove(törlendoNya);
+                context.SaveChanges();
 
+            }
+            catch (Exception ex)
+            {
+                string errMsg = string.Format("Error: {0}\nLine: {1}", ex.Message, ex.Source);
+            }
+        }
 
     }
 }
